@@ -1,8 +1,19 @@
 class TitleBracketsValidator < ActiveModel::Validator
 
   def validate(record)
-    re = /(?=\{((?:[^{}]++|\{\g<1>\})++)\})|(?=\[((?:[^]]++|\[\g<1>\])++)\])|(?=\(((?:[^()]++|\(\(\d{4}\)\))++)\))/
-    # byebug
-    record.errors[:base] << "has invalid title" unless record.title[re] == ""
+    record.errors[:base] << "has invalid title" unless valid_string?(record)
+  end
+
+  def valid_string?(record)
+    return false if record.title.include?("()"|| "[]" || "{}")
+    strim = record.title.gsub(/[^\[\]\(\)\{\}]/,'')
+    return true if strim.empty?
+    return false if strim.size.odd?
+    loop do
+      s = strim.gsub('()','').gsub('[]','').gsub('{}','')
+      return true if s.empty?
+      return false if s == strim
+      strim = s
+    end
   end
 end

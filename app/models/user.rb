@@ -24,4 +24,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   validates :phone_number, format: { with: /\A[+]?\d+(?>[- .]\d+)*\z/, allow_nil: true }
+
+  has_many :comments
+
+  def weekly_comment_count
+    comments.where('created_at >= ?', 1.week.ago).count
+  end
 end

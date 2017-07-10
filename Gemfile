@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 
 gem "rails", "5.1.1"
-
 gem "annotate"
 gem "bootstrap-sass"
+gem "byebug"
 gem "decent_decoration"
 gem "decent_exposure"
 gem "devise"

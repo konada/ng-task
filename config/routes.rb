@@ -15,4 +15,10 @@ Rails.application.routes.draw do
       get :export
     end
   end
+
+  resources :movies do
+    resources :comments
+  end
+
+  get '/top_commenters' => 'users#top_commenters'
 end

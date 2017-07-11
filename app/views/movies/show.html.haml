@@ -5,11 +5,12 @@
   %p= link_to 'Email me details about this movie', send_info_movie_path(movie), class: 'btn btn-sm btn-default'
 
 %h3 Comments
-= form_for [movie, Comment.new] do |f|
-  = f.text_area :body, placeholder: "Add a comment"
-  %br/
-  = f.hidden_field :user_id, value: current_user.id
-  = f.submit "Add Comment"
-%ul
+- if user_signed_in?
+  = form_for [movie, Comment.new] do |f|
+    = f.text_area :body, placeholder: "Add a comment"
+    %br/
+    = f.hidden_field :user_id, value: current_user.id
+    = f.submit "Add Comment"
+  %ul
 
-  = render(partial: 'comments/comment', collection: movie.comments)
+= render(partial: 'comments/comment', collection: movie.comments)
